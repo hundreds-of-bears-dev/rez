@@ -15,6 +15,9 @@ def setup_parser(parser, completions: bool = False) -> None:
     formats = get_shell_types() + ['dict', 'table']
 
     parser.add_argument(
+        "-c", "--cmd", action="store_true",
+        help="interpret FILE as command string")
+    parser.add_argument(
         "-f", "--format", type=str, choices=formats,
         help="print output in the given format. If None, the current shell "
         "language (%s) is used" % system.shell)
@@ -28,7 +31,7 @@ def setup_parser(parser, completions: bool = False) -> None:
         "reference. If this is set to the special value 'all', all variables "
         "will be treated this way")
     FILE_action = parser.add_argument(
-        "FILE", type=str,
+        "FILE", type=str, nargs="?", default="",
         help='file containing rex code to execute')
 
     if completions:
@@ -45,8 +48,11 @@ def command(opts, parser, extra_arg_groups=None) -> None:
     from rez.rex import RexExecutor, Python
     from pprint import pformat
 
-    with open(opts.FILE) as f:
-        code = f.read()
+    if opts.cmd:
+        code = opts.FILE
+    else:
+        with open(opts.FILE) as f:
+            code = f.read()
 
     interp = None
     if opts.format is None:
