@@ -34,7 +34,6 @@ def setup_parser(parser, completions: bool = False) -> None:
         "FILE", type=str,
         help='file containing rex code to execute')
 
-
     if completions:
         from rez.cli._complete_util import FilesCompleter
         from rez.vendor.argcomplete.completers import EnvironCompleter
