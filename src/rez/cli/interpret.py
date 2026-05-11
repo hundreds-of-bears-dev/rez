@@ -16,7 +16,7 @@ def setup_parser(parser, completions: bool = False) -> None:
 
     parser.add_argument(
         "-c", "--cmd", action="store_true",
-        help="interpret FILE as command string")
+        help="interpret FILE as a command string")
     parser.add_argument(
         "-f", "--format", type=str, choices=formats,
         help="print output in the given format. If None, the current shell "
