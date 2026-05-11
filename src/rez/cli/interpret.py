@@ -31,8 +31,9 @@ def setup_parser(parser, completions: bool = False) -> None:
         "reference. If this is set to the special value 'all', all variables "
         "will be treated this way")
     FILE_action = parser.add_argument(
-        "FILE", type=str, nargs="?", default="",
+        "FILE", type=str,
         help='file containing rex code to execute')
+
 
     if completions:
         from rez.cli._complete_util import FilesCompleter
