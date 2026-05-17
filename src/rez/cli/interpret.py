@@ -15,8 +15,8 @@ def setup_parser(parser, completions: bool = False) -> None:
     formats = get_shell_types() + ['dict', 'table']
 
     parser.add_argument(
-        "-c", "--cmd", action="store_true",
-        help="interpret FILE as a command string")
+        "-c", "--command", action="store_true",
+        help="interpret FILE as a code string")
     parser.add_argument(
         "-f", "--format", type=str, choices=formats,
         help="print output in the given format. If None, the current shell "
@@ -32,7 +32,7 @@ def setup_parser(parser, completions: bool = False) -> None:
         "will be treated this way")
     FILE_action = parser.add_argument(
         "FILE", type=str,
-        help='file containing rex code to execute')
+        help='file (or code string with -c) containing rex code to execute')
 
     if completions:
         from rez.cli._complete_util import FilesCompleter
@@ -48,7 +48,7 @@ def command(opts, parser, extra_arg_groups=None) -> None:
     from rez.rex import RexExecutor, Python
     from pprint import pformat
 
-    if opts.cmd:
+    if opts.command:
         code = opts.FILE
         filename = None
     else:
