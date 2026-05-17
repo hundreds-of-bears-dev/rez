@@ -50,8 +50,10 @@ def command(opts, parser, extra_arg_groups=None) -> None:
 
     if opts.cmd:
         code = opts.FILE
+        filename = None
     else:
-        with open(opts.FILE) as f:
+        filename = opts.FILE
+        with open(filename) as f:
             code = f.read()
 
     interp = None
@@ -73,7 +75,7 @@ def command(opts, parser, extra_arg_groups=None) -> None:
                      parent_environ=parent_env,
                      parent_variables=parent_vars)
 
-    ex.execute_code(code, filename=opts.FILE)
+    ex.execute_code(code, filename=filename)
 
     o = ex.get_output()
     if isinstance(o, dict):
